@@ -13,14 +13,11 @@ function PlayField(props) {
   const setState = props.setState;
 
   function TdElems(props) {
-    let i = props.i;
-    let j = props.j;
-
-    return <td key={(i+1)*(j+1)} onClick={() =>fillingField(i, j)}>{props.item}</td>
+    return <td onClick={() =>fillingField(props.i, props.j)}>{props.item}</td>
   }
   const trElems = state.field.map((elem, i) =>
     <tr key={i}>
-      {elem.map((item, j) => <TdElems i={i} j={j} item={item} />)}
+      {elem.map((item, j) => <TdElems key={(i+1)*(j+1)} i={i} j={j} item={item} />)}
     </tr>
   )
 
@@ -40,11 +37,9 @@ function PlayField(props) {
       })
 
       return {
+        ...state,
         field: array,
-        queue: !state.queue,
-        start: state.start,
-        modal: state.modal,
-        modalText: state.modalText
+        queue: !state.queue
       }
     })
   }
@@ -108,11 +103,8 @@ function PlayField(props) {
   function showField(){
     setState(state => {
       return {
-        field: state.field,
-        queue: state.queue,
-        start: true,
-        modal: state.modal,
-        modalText: state.modalText
+        ...state,
+        start: true
       }
     })
   }
@@ -142,15 +134,14 @@ function Modal(props) {
     ]
     setState(state => {
       return {
+        ...state,
         field: [
           ['', '', ''],
           ['', '', ''],
           ['', '', '']
         ],
-        queue: state.queue,
         start: true,
-        modal: false,
-        modalText: state.modalText
+        modal: false
       }
     })
   }

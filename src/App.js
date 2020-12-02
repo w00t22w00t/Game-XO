@@ -11,14 +11,20 @@ function PlayField(props) {
   const markerTypes = ['✘', '○'] // '✘';
   const state = props.state;
   const setState = props.setState;
-  
+
+  function TdElems(props) {
+    let i = props.i;
+    let j = props.j;
+
+    return <td key={(i+1)*(j+1)} onClick={() =>fillingField(i, j)}>{props.item}</td>
+  }
   const trElems = state.field.map((elem, i) =>
     <tr key={i}>
-      {elem.map((item, j) => <td key={(i+1)*(j+1)} onClick={() =>changeText(i, j)}>{item}</td>)}
+      {elem.map((item, j) => <TdElems i={i} j={j} item={item} />)}
     </tr>
   )
 
-  function changeText(i, j) {
+  function fillingField(i, j) {
     setState(state => {
       let marker = state.queue ? markerTypes[0] : markerTypes[1]
       const array = state.field.map((item, index) => {
@@ -61,24 +67,42 @@ function PlayField(props) {
   }
 
   function checkWinner(marker) {
+    let smbdWin = false;
     function winCondition(element) {
       return element === marker
     }
 
-    matrix.map( arrs => {
-      if(arrs.every(winCondition)) {
-        setState(state => {
-          return {
-            field: state.field,
-            queue: true,
-            start: true,
-            modal: true,
-            modalText: marker ==='✘'? 'Победили крестики' : 'Победили нолики'
-          }
-        })
+    for (let i = 0; i < matrix.length; i++) {
+      if(matrix[i].every(winCondition)) {
+        smbdWin = true;
       }
-      return arrs.every(winCondition)
-    })
+      for (let j = 0; j < matrix[i].length; j++) {
+        if (0 < i && i < matrix.length-1) {
+          if(matrix[i-1][j] === marker && matrix[i][j] === marker && matrix[i+1][j] === marker) {
+            smbdWin = true;
+          }
+        }
+      }
+    }
+
+    const firstDiagonal = matrix.map((arrs, index) => arrs.slice(index, index+1).join()).slice().every(winCondition),
+          secondDiagonal = matrix.map((arrs, index) => arrs.slice(arrs.length-(1 + index), arrs.length-index).join()).slice().every(winCondition);
+
+    if (firstDiagonal || secondDiagonal) {
+      smbdWin = true;
+    }
+
+    if(smbdWin) {
+      setState(state => {
+        return {
+          field: state.field,
+          queue: true,
+          start: true,
+          modal: true,
+          modalText: marker ==='✘'? 'Победили крестики' : 'Победили нолики'
+        }
+      })
+    }
   }
 
   function showField(){

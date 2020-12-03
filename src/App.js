@@ -28,8 +28,8 @@ function PlayField(props) {
         return item.map((elem, num) =>{
           if(i === index && j === num && elem === '') {
             matrix[i][j] = marker
-            checkWinner(marker)
             checkDraw()
+            checkWinner(marker)
             return elem = marker
           }
           return elem

@@ -1,0 +1,55 @@
+
+.modal-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	background: rgba(0, 0, 0, 0);
+	overflow: hidden;
+	transition: background .5s;
+	z-index: -1;
+}
+
+.modal-window {
+	position: absolute;
+	top: 100px;
+	left: calc(50% - 400px/2);
+	width: 400px;
+	height: 150px;
+	background: #727dff;
+	border: 1px solid #000;
+	border-radius: 5px;
+}
+
+.modal-header {
+  margin-top: 10px;
+	width: 100%;
+	font-size: 20px;
+  padding: 5px 10px;
+  
+}
+
+.modal-header h2 {
+	text-align: center;
+}
+
+.modal-body {
+  margin-top: 35px;
+  padding: 10px;
+  text-align: center;
+}
+
+.modal-body button {
+	padding: 3px 10px;
+	background: #f55555;
+	border: 1px solid #000;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+
+.modal-overlay.open {
+	background: rgba(0, 0, 0, 0.5);
+	z-index: 1;
+}

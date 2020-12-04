@@ -1,0 +1,20 @@
+.play-field {
+    margin: 20px auto;
+  }
+  
+  .play-field td {
+    height: 50px;
+    width: 50px;
+    border: 1px solid #000000;
+    font-size: 30px;
+    text-align: center;
+    cursor: pointer;
+  }
+  
+  .bttn-show-field {
+    display: block;
+    margin: 0 auto;
+    padding: 5px 20px;
+    cursor: pointer;
+    font-size: 20px;
+  }
